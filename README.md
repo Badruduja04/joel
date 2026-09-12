@@ -303,3 +303,5 @@ Personal project for loved ones ❤️
 - Supabase for backend infrastructure
 - Framer Motion for smooth animations
 - Tailwind CSS for styling
+#   j o e l  
+ 

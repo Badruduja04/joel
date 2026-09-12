@@ -1,107 +1,117 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import LanternAnimation, { SingleLantern, CoronaSymbol } from './components/LanternAnimation'
+import AmbientSound from './components/AmbientSound'
 
 export default function Home() {
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion()
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [showLanterns, setShowLanterns] = useState(false)
+  const [brightness, setBrightness] = useState(0)
 
-  const handleEnterClick = (e: React.MouseEvent) => {
+  const handleReleaseLight = (e: React.MouseEvent) => {
     e.preventDefault()
     setIsTransitioning(true)
+    setShowLanterns(true)
     
-    // Smooth transition to login
+    // Gradually brighten the background
+    let currentBrightness = 0
+    const brightenInterval = setInterval(() => {
+      currentBrightness += 0.02
+      setBrightness(currentBrightness)
+      if (currentBrightness >= 1) {
+        clearInterval(brightenInterval)
+      }
+    }, 50)
+    
+    // Navigate after lanterns animation completes (longer duration)
     setTimeout(() => {
       router.push('/login')
-    }, 600)
+    }, 8000) // 8 detik agar animasi lentera selesai dulu
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-hidden">
-      {/* Buzz Lightyear inspired floating elements */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          rotate: [0, 5, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute top-20 right-10 w-24 h-24 bg-buzz-green rounded-full opacity-20 blur-2xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 30, 0],
-          rotate: [0, -5, 0],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-        className="absolute bottom-20 left-10 w-32 h-32 bg-buzz-purple rounded-full opacity-20 blur-2xl"
+      {/* Ambient background sound */}
+      <AmbientSound 
+        audioSrc="/sounds/night-wind-ambient.mp3"
+        volume={0.15}
+        autoPlay={true}
+        fadeInDuration={4}
+        showControls={true}
       />
 
-      {/* Star decorations - ANIMATED & ALIVE */}
-      {[...Array(20)].map((_, i) => {
-        const size = Math.random() > 0.7 ? 'w-1.5 h-1.5' : 'w-1 h-1'
-        const isSparkle = Math.random() > 0.85
+      {/* Dynamic background brightness overlay */}
+      <motion.div
+        animate={{ 
+          opacity: brightness * 0.3,
+        }}
+        className="fixed inset-0 bg-gradient-to-br from-lantern-lilac-pale via-lantern-mist to-lantern-lilac-light z-[1] pointer-events-none"
+      />
+
+      {/* Twinkling stars - subtle and elegant */}
+      {[...Array(30)].map((_, i) => {
+        const size = Math.random() > 0.7 ? 'w-1 h-1' : 'w-0.5 h-0.5'
         
         return (
           <motion.div
             key={i}
             initial={{ opacity: 0 }}
             animate={{
-              opacity: [0.2, 1, 0.2],
-              scale: isSparkle ? [1, 1.8, 1] : [1, 1.3, 1],
-              x: [0, (Math.random() - 0.5) * 3, 0],
-              y: [0, (Math.random() - 0.5) * 3, 0],
+              opacity: [0.1, 0.8, 0.1],
+              scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: 2 + Math.random() * 3,
+              duration: 3 + Math.random() * 4,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              delay: Math.random() * 3,
               ease: "easeInOut"
             }}
-            className={`absolute ${size} bg-white rounded-full ${isSparkle ? 'shadow-[0_0_8px_rgba(255,255,255,0.8)]' : ''}`}
+            className={`absolute ${size} bg-lantern-gold rounded-full z-[2]`}
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
+              boxShadow: '0 0 4px rgba(252, 211, 77, 0.8)'
             }}
             suppressHydrationWarning
           />
         )
       })}
 
-      {/* Transition overlay */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isTransitioning ? 1 : 0 }}
-        transition={{ duration: 0.6 }}
-        className="fixed inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900 z-50 pointer-events-none"
-      />
+      {/* Lantern Animation - triggered on button click */}
+      {showLanterns && (
+        <LanternAnimation 
+          count={40} 
+          trigger={showLanterns}
+        />
+      )}
 
+      {/* Main content */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ 
           opacity: isTransitioning ? 0 : 1,
         }}
-        transition={{ duration: isTransitioning ? 0.5 : 0 }}
-        className="text-center space-y-8 relative z-10"
+        transition={{ duration: isTransitioning ? 2 : 0 }}
+        className="text-center space-y-12 relative z-10 max-w-2xl"
       >
-        {/* Buzz Lightyear Image - REFINED ENTRANCE */}
+        {/* Corona Symbol - subtle in background */}
+        <motion.div
+          className="absolute -top-32 left-1/2 -translate-x-1/2 opacity-20 z-0"
+        >
+          <CoronaSymbol />
+        </motion.div>
+
+        {/* Single glowing lantern - hero element */}
         <motion.div
           initial={prefersReducedMotion ? false : { 
             opacity: 0, 
-            scale: 0.92,
-            y: -20
+            scale: 0.5,
+            y: 20
           }}
           animate={{ 
             opacity: 1, 
@@ -109,260 +119,161 @@ export default function Home() {
             y: 0
           }}
           transition={prefersReducedMotion ? { duration: 0.1 } : { 
-            duration: 0.8,
-            ease: [0.25, 0.1, 0.25, 1], // Custom easing for smooth, gentle motion
-            delay: 0.2 
+            duration: 1.5,
+            ease: [0.22, 0.61, 0.36, 1], // easeOutCubic
+            delay: 0.3 
           }}
-          className="mb-8"
+          className="mb-12 flex justify-center relative z-10"
         >
-          <motion.div
-            animate={prefersReducedMotion ? {} : {
-              y: [0, -15, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="relative inline-block"
-          >
-            {/* Buzz Lightyear character */}
-            <motion.div
-              animate={prefersReducedMotion ? {} : {
-                boxShadow: [
-                  '0 0 30px rgba(139, 195, 74, 0.4)',
-                  '0 0 50px rgba(139, 195, 74, 0.7)',
-                  '0 0 30px rgba(139, 195, 74, 0.4)',
-                ],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-              className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm border-4 border-buzz-green/30"
-            >
-              <img 
-                src="/buzz/download (1).jpg"
-                alt="Buzz Lightyear"
-                className="w-full h-full object-contain p-2"
-              />
-            </motion.div>
-            
-            {/* Animated decorative circles - GENTLE FLOATING */}
-            {/* RED circle */}
-            <motion.div
-              initial={prefersReducedMotion ? false : { scale: 0, opacity: 0 }}
-              animate={prefersReducedMotion ? {} : { 
-                scale: [1, 1.15, 1], 
-                opacity: [0.7, 1, 0.7],
-                x: [0, 2, 0],
-                y: [0, -3, 0]
-              }}
-              transition={{ 
-                duration: 2.3, 
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5
-              }}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-buzz-red rounded-full border-2 border-white/50"
-              style={{ boxShadow: '0 0 15px rgba(229, 57, 53, 0.8)' }}
-            />
-            {/* GREEN circle */}
-            <motion.div
-              initial={prefersReducedMotion ? false : { scale: 0, opacity: 0 }}
-              animate={prefersReducedMotion ? {} : { 
-                scale: [1, 1.2, 1], 
-                opacity: [0.7, 1, 0.7],
-                x: [0, -2, 0],
-                y: [0, 2, 0]
-              }}
-              transition={{ 
-                duration: 2.7, 
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.7
-              }}
-              className="absolute -top-2 -left-2 w-6 h-6 bg-buzz-green rounded-full border-2 border-white/50"
-              style={{ boxShadow: '0 0 15px rgba(139, 195, 74, 0.8)' }}
-            />
-            {/* YELLOW circle */}
-            <motion.div
-              initial={prefersReducedMotion ? false : { scale: 0, opacity: 0 }}
-              animate={prefersReducedMotion ? {} : { 
-                scale: [1, 1.18, 1], 
-                opacity: [0.7, 1, 0.7],
-                x: [0, -3, 0],
-                y: [0, 3, 0]
-              }}
-              transition={{ 
-                duration: 2.5, 
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.9
-              }}
-              className="absolute -bottom-2 -left-2 w-6 h-6 bg-yellow-400 rounded-full border-2 border-white/50"
-              style={{ boxShadow: '0 0 15px rgba(251, 192, 45, 0.8)' }}
-            />
-            {/* BLUE circle */}
-            <motion.div
-              initial={prefersReducedMotion ? false : { scale: 0, opacity: 0 }}
-              animate={prefersReducedMotion ? {} : { 
-                scale: [1, 1.22, 1], 
-                opacity: [0.7, 1, 0.7],
-                x: [0, 3, 0],
-                y: [0, -2, 0]
-              }}
-              transition={{ 
-                duration: 2.9, 
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.1
-              }}
-              className="absolute -bottom-2 -right-2 w-6 h-6 bg-blue-400 rounded-full border-2 border-white/50"
-              style={{ boxShadow: '0 0 15px rgba(66, 165, 245, 0.8)' }}
-            />
-          </motion.div>
+          <SingleLantern />
         </motion.div>
 
-        {/* Welcome Text - STAGGERED & PERSONALIZED */}
-        <motion.h1
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={prefersReducedMotion ? { duration: 0.1 } : { 
-            delay: 0.6, 
-            duration: 0.7,
-            ease: "easeOut"
-          }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-wide px-4 mb-3"
-          style={{
-            textShadow: '0 0 20px rgba(139, 195, 74, 0.5)',
-          }}
-        >
-          Welcome, Caramel! ✨
-        </motion.h1>
-        
-        {/* Subtitle - STAGGERED & MORE PERSONAL */}
-        <motion.p
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={prefersReducedMotion ? { duration: 0.1 } : { 
-            delay: 0.9, 
-            duration: 0.7,
-            ease: "easeOut"
-          }}
-          className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-md mx-auto leading-relaxed px-4"
-        >
-          I made a little something
-          <br />
-          special for your birthday
-        </motion.p>
-
-        {/* ENTER Button - STAGGERED with MICRO-INTERACTIONS */}
+        {/* Poetic greeting - serif font */}
         <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.9 }}
-          animate={{ 
-            opacity: 1, 
-            scale: isTransitioning ? 1.05 : 1
-          }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={prefersReducedMotion ? { duration: 0.1 } : { 
             delay: 1.2, 
-            duration: 0.5
+            duration: 1,
+            ease: "easeOut"
           }}
-          className="flex flex-col items-center gap-3"
+          className="space-y-6 px-4"
         >
-          <Link
-            href="/login"
-            onClick={handleEnterClick}
-            className="group inline-block mt-8 px-8 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-buzz-green via-buzz-green-dark to-buzz-green rounded-full text-white font-bold text-base sm:text-lg transition-all duration-300 border-4 border-white/30 relative overflow-hidden"
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl font-serif text-lantern-lilac-light tracking-wide leading-relaxed"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              textShadow: '0 2px 20px rgba(196, 181, 253, 0.3)',
+            }}
           >
-            {/* Shimmer effect on hover only */}
-            <motion.span
+            A little light
+            <br />
+            just for you
+          </h1>
+          
+          <motion.p
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={prefersReducedMotion ? { duration: 0.1 } : { 
+              delay: 1.8, 
+              duration: 1,
+            }}
+            className="text-base sm:text-lg md:text-xl text-lantern-mist/80 max-w-md mx-auto leading-relaxed font-light"
+            style={{
+              fontFamily: "'Lora', serif",
+            }}
+          >
+            A sky full of wishes,
+            <br />
+            waiting to take flight
+          </motion.p>
+        </motion.div>
+
+        {/* Release the Light button */}
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+          animate={{ 
+            opacity: 1, 
+            y: 0
+          }}
+          transition={prefersReducedMotion ? { duration: 0.1 } : { 
+            delay: 2.2, 
+            duration: 0.8,
+          }}
+          className="flex flex-col items-center gap-4 pt-8"
+        >
+          <motion.button
+            onClick={handleReleaseLight}
+            disabled={isTransitioning}
+            className="group relative px-10 py-4 sm:px-12 sm:py-5 rounded-full overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={!isTransitioning && !prefersReducedMotion ? { 
+              scale: 1.05,
+              transition: { duration: 0.3 }
+            } : {}}
+            whileTap={!isTransitioning && !prefersReducedMotion ? { 
+              scale: 0.98 
+            } : {}}
+          >
+            {/* Button background with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-lantern-gold-dark via-lantern-gold to-lantern-gold-dark opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+            
+            {/* Glow effect */}
+            <div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: 'radial-gradient(circle, rgba(252, 211, 77, 0.4) 0%, transparent 70%)',
+                filter: 'blur(20px)',
+              }}
+            />
+            
+            {/* Shimmer effect on hover */}
+            <motion.div
               initial={{ x: '-100%' }}
               whileHover={{ 
                 x: '100%',
-                transition: { duration: 0.6, ease: "easeInOut" }
+                transition: { duration: 0.8, ease: "easeInOut" }
               }}
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
             />
             
-            {/* Button content */}
-            <motion.span
-              className="relative z-10 block"
-              whileHover={prefersReducedMotion ? {} : { y: -2 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              animate={isTransitioning ? {
-                boxShadow: '0 0 40px rgba(139, 195, 74, 0.9)'
-              } : {}}
+            {/* Button text */}
+            <span 
+              className="relative z-10 text-lantern-midnight font-semibold text-base sm:text-lg tracking-wider"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+              }}
             >
-              ENTER
-            </motion.span>
-          </Link>
+              {isTransitioning ? 'Releasing...' : 'Release the Light'}
+            </span>
+          </motion.button>
 
-          {/* Helper text below button */}
+          {/* Subtle hint */}
           <motion.p
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={prefersReducedMotion ? { duration: 0.1 } : { 
-              delay: 1.5, 
-              duration: 0.6,
-              ease: "easeOut"
+              delay: 2.8, 
+              duration: 1,
             }}
-            className="text-sm text-white/50 font-light tracking-wide"
+            className="text-sm text-lantern-lilac/60 font-light tracking-wide"
+            style={{
+              fontFamily: "'Lora', serif",
+            }}
           >
-            Your little space awaits ✨
+            Let the lanterns guide your way
           </motion.p>
         </motion.div>
       </motion.div>
 
-      {/* Animated Buzz "buttons" in corner - GENTLE FLOATING */}
+      {/* Decorative corner element - minimalist */}
       <motion.div
-        animate={prefersReducedMotion ? {} : {
-          rotate: 360,
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute bottom-10 right-10 w-16 h-16"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.3, scale: 1 }}
+        transition={{ delay: 3, duration: 1 }}
+        className="absolute bottom-8 right-8 w-20 h-20 z-[2]"
       >
-        <motion.div 
-          animate={prefersReducedMotion ? {} : {
-            x: [0, 2, 0],
-            y: [0, -2, 0]
-          }}
-          transition={{ duration: 2.2, repeat: Infinity }}
-          className="w-4 h-4 bg-buzz-red rounded-full absolute top-0 left-0 opacity-70" 
-          style={{ boxShadow: '0 0 10px rgba(229, 57, 53, 0.8)' }} 
-        />
-        <motion.div 
-          animate={prefersReducedMotion ? {} : {
-            x: [0, -2, 0],
-            y: [0, 2, 0]
-          }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-          className="w-4 h-4 bg-buzz-green rounded-full absolute top-0 right-0 opacity-70"
-          style={{ boxShadow: '0 0 10px rgba(139, 195, 74, 0.8)' }} 
-        />
-        <motion.div 
-          animate={prefersReducedMotion ? {} : {
-            x: [0, -3, 0],
-            y: [0, 3, 0]
-          }}
-          transition={{ duration: 2.8, repeat: Infinity }}
-          className="w-4 h-4 bg-yellow-400 rounded-full absolute bottom-0 left-0 opacity-70"
-          style={{ boxShadow: '0 0 10px rgba(251, 192, 45, 0.8)' }} 
-        />
-        <motion.div 
-          animate={prefersReducedMotion ? {} : {
-            x: [0, 3, 0],
-            y: [0, -3, 0]
-          }}
-          transition={{ duration: 3.1, repeat: Infinity }}
-          className="w-4 h-4 bg-blue-400 rounded-full absolute bottom-0 right-0 opacity-70"
-          style={{ boxShadow: '0 0 10px rgba(66, 165, 245, 0.8)' }} 
-        />
+        {/* Simplified ornamental design */}
+        <div className="relative w-full h-full">
+          {[0, 90, 180, 270].map((rotation, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                opacity: [0.3, 0.7, 0.3],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                delay: i * 0.5,
+              }}
+              className="absolute top-1/2 left-1/2 w-1 h-8 bg-gradient-to-b from-lantern-gold to-transparent"
+              style={{
+                transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+                transformOrigin: 'center',
+              }}
+            />
+          ))}
+        </div>
       </motion.div>
     </main>
   )
