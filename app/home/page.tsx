@@ -348,7 +348,7 @@ export default function HomePage() {
                 className="text-lantern-lilac-light/80 text-sm text-center italic font-light"
                 style={{ fontFamily: "'Lora', serif" }}
               >
-                "In a sky full of lanterns, you shine the brightest" ✨
+                &ldquo;In a sky full of lanterns, you shine the brightest&rdquo; ✨
               </p>
             </div>
           </motion.div>

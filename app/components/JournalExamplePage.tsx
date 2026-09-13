@@ -105,16 +105,16 @@ export default function JournalExamplePage() {
             style={{ fontFamily: "'Lora', serif" }}
           >
             <p>
-              As I sit here writing this, I'm reminded of all the small moments that made us who we are. 
+              As I sit here writing this, I&apos;m reminded of all the small moments that made us who we are. 
               The laughter that echoed through empty rooms, the quiet conversations under starlit skies, 
               and the comfortable silence that said more than words ever could.
             </p>
             <p>
-              You've been my constant in a world that never stops changing. My safe harbor in the storm, 
+              You&apos;ve been my constant in a world that never stops changing. My safe harbor in the storm, 
               my light in the darkness, and my reason to believe in magic.
             </p>
             <p>
-              These pages are filled with memories we've created together, and dreams we're yet to chase. 
+              These pages are filled with memories we&apos;ve created together, and dreams we&apos;re yet to chase. 
               Thank you for being you, and for letting me be part of your story.
             </p>
           </div>

@@ -217,7 +217,7 @@ export function QuoteCard({
     >
       {/* Quote marks background */}
       <div className="absolute -top-4 -left-2 text-6xl text-lantern-gold/20 font-serif leading-none">
-        "
+        &ldquo;
       </div>
       
       <ArchCard className="pl-8">

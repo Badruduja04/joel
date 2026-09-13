@@ -321,7 +321,7 @@ export default function PhotoBoothSimple() {
     
     // Load template image for buzz polaroid 1
     const templateImg = new Image()
-    templateImg.src = '/buzz_polaroid_1.png'
+    templateImg.src = '/polaroid_1.png'
     
     await new Promise<void>((resolve) => {
       templateImg.onload = () => resolve()
@@ -397,7 +397,7 @@ export default function PhotoBoothSimple() {
     
     // Load template image for buzz polaroid 3
     const templateImg = new Image()
-    templateImg.src = '/buzz_polaroid_4.png'
+    templateImg.src = '/polaroid_2.png'
     
     await new Promise<void>((resolve) => {
       templateImg.onload = () => resolve()
