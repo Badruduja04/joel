@@ -1,4 +1,5 @@
-# Vercel ignore file - files not needed for deployment
+# Vercel ignore file
+# Force rebuild - files not needed for deployment
 
 # Local development
 .next/
