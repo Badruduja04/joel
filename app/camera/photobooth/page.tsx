@@ -18,8 +18,8 @@ type Template = {
 const TEMPLATES: Template[] = [
   { id: 1, name: 'Single Shot', slots: 1, layout: 'stamp-1', icon: '📸' },
   { id: 2, name: 'Stamp Duo', slots: 2, layout: 'stamp-2', icon: '📮' },
-  { id: 3, name: 'Buzz Polaroid', slots: 1, layout: 'polaroid-1', icon: '/buzz/download.jpg' },
-  { id: 4, name: 'Quad Polaroid', slots: 4, layout: 'polaroid-3', icon: '/buzz/download (1).jpg' }
+  { id: 3, name: 'Rapunzel Polaroid', slots: 1, layout: 'polaroid-1', icon: '/buzz/rapunzel.jpg' },
+  { id: 4, name: 'Quad Polaroid', slots: 4, layout: 'polaroid-3', icon: '/buzz/rapunzel 1.jpg' }
 ]
 
 export default function PhotoBoothSimple() {
@@ -582,7 +582,12 @@ export default function PhotoBoothSimple() {
             </p>
             
             {/* Video dengan countdown overlay */}
-            <div className="relative bg-black rounded-2xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
+            <div className="relative bg-black rounded-2xl overflow-hidden mx-auto" 
+                 style={{ 
+                   aspectRatio: '4/3',
+                   maxWidth: '100%',
+                   width: '100%'
+                 }}>
               <video
                 ref={videoRef}
                 autoPlay

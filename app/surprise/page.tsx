@@ -480,10 +480,10 @@ export default function SurprisePage() {
   
   return (
     <main className="min-h-screen relative overflow-hidden flex items-center justify-center">
-      {/* Background gradient (always visible) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900" />
+      {/* Background gradient lantern theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-lantern-midnight via-indigo-900 to-lantern-midnight" />
       
-      {/* Subtle animated orbs */}
+      {/* Subtle animated orbs - lantern glow */}
       <motion.div
         animate={{
           y: [0, -30, 0],
@@ -494,7 +494,7 @@ export default function SurprisePage() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-20 right-10 w-40 h-40 bg-buzz-purple/20 rounded-full blur-3xl"
+        className="absolute top-20 right-10 w-40 h-40 bg-lantern-lilac/20 rounded-full blur-3xl"
       />
       <motion.div
         animate={{
@@ -507,7 +507,7 @@ export default function SurprisePage() {
           ease: "easeInOut",
           delay: 1
         }}
-        className="absolute bottom-20 left-10 w-48 h-48 bg-buzz-red/20 rounded-full blur-3xl"
+        className="absolute bottom-20 left-10 w-48 h-48 bg-lantern-gold/20 rounded-full blur-3xl"
       />
       
       {/* Surprise Box & Flowers */}
@@ -969,22 +969,24 @@ export default function SurprisePage() {
                   transition={{ delay: 0.6, duration: 0.6 }}
                   className="text-4xl md:text-5xl font-bold text-center mb-3"
                   style={{ 
-                    background: 'linear-gradient(135deg, #8BC34A 0%, #7E57C2 100%)',
+                    fontFamily: "'Playfair Display', serif",
+                    background: 'linear-gradient(135deg, #FCD34D 0%, #C4B5FD 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text'
                   }}
                 >
-                  Happy Birthday
+                  Semangat, Joel! 🏮
                 </motion.h1>
 
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7, duration: 0.6 }}
-                  className="text-center text-buzz-purple text-xl md:text-2xl font-semibold mb-8"
+                  className="text-center text-lantern-lilac text-xl md:text-2xl font-semibold mb-8"
+                  style={{ fontFamily: "'Lora', serif" }}
                 >
-                  lolla julia ananda
+                  A Little Light for Your Journey
                 </motion.p>
 
                 {/* Divider */}
@@ -994,25 +996,37 @@ export default function SurprisePage() {
                   transition={{ delay: 0.8, duration: 0.8 }}
                   className="flex items-center justify-center gap-2 mb-8"
                 >
-                  <div className="h-px bg-gradient-to-r from-transparent via-buzz-green to-transparent flex-1" />
-                  <div className="text-buzz-red text-2xl">🌸</div>
-                  <div className="h-px bg-gradient-to-r from-transparent via-buzz-green to-transparent flex-1" />
+                  <div className="h-px bg-gradient-to-r from-transparent via-lantern-gold to-transparent flex-1" />
+                  <div className="text-lantern-gold text-2xl">🏮</div>
+                  <div className="h-px bg-gradient-to-r from-transparent via-lantern-gold to-transparent flex-1" />
                 </motion.div>
 
-                {/* Birthday Message */}
+                {/* Message */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.0, duration: 0.6 }}
                   className="text-center mb-8 space-y-4"
                 >
-                  <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                  happy brithday olla, maap nyak telat ngucapin kemarin
-                  semoga di ulang tahun yang ke 24 sekarang sehat-sehat deh ya la sama lingkungannya, semangat kerjaannya yang kita sama-sama first time jadi guru kkkkkk, semoga nanti hubungannya yang ga bikin ldr lagi:v, makin banyak rezekinya la, biar nanti kali&quot; bisa ke bogor 
-                sorry kalau ini masih belum maksimal, nanti mah bisa di update lagi anauannya kkkkkk, pokoknya mah 
+                  <p 
+                    className="text-lantern-mist/90 text-base md:text-lg leading-relaxed"
+                    style={{ fontFamily: "'Lora', serif" }}
+                  >
+                    Ga bisa dirangkaikan dengan kata-kata, tapi aku tahu kamu pasti bisa melewati semua ini dengan baik.
+                    Setiap langkah yang kamu ambil, setiap usaha yang kamu lakukan, semuanya bermakna.
                   </p>
-                  <p className="text-gray-800 text-lg md:text-xl font-semibold italic">
-                    Happy birthday, lolla — here is to many more birthdays, adventures, and memories together. 💚
+                  <p 
+                    className="text-lantern-mist/90 text-base md:text-lg leading-relaxed"
+                    style={{ fontFamily: "'Lora', serif" }}
+                  >
+                    Semoga lancar ya, Joel. Apapun yang sedang kamu hadapi, ingat bahwa kamu tidak sendirian.
+                    Ada cahaya yang selalu menyinarimu, bahkan di malam paling gelap sekalipun.
+                  </p>
+                  <p 
+                    className="text-lantern-lilac-light text-lg md:text-xl font-semibold italic"
+                    style={{ fontFamily: "'Playfair Display', serif" }}
+                  >
+                    You shine brighter than a thousand lanterns. Keep going, you've got this! ✨
                   </p>
                 </motion.div>
 
@@ -1021,7 +1035,7 @@ export default function SurprisePage() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.2, duration: 0.6 }}
-                  className="bg-gradient-to-r from-buzz-green/10 to-buzz-purple/10 rounded-2xl p-6 mb-8 border-2 border-buzz-green/20"
+                  className="bg-lantern-midnight/30 backdrop-blur-md rounded-2xl p-6 mb-8 border-2 border-lantern-gold/20 shadow-xl"
                 >
                   <div className="flex items-center justify-center gap-3 mb-3">
                     <motion.div
@@ -1031,17 +1045,25 @@ export default function SurprisePage() {
                     >
                       🎵
                     </motion.div>
-                    <h3 className="text-buzz-purple font-bold text-lg">A Song for Your Day</h3>
+                    <h3 
+                      className="text-lantern-gold font-bold text-lg"
+                      style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                      A Song for You
+                    </h3>
                     <motion.div
                       animate={{ scale: [1, 1.3, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                       className="text-2xl"
                     >
-                      💝
+                      🏮
                     </motion.div>
                   </div>
-                  <p className="text-gray-600 text-sm text-center mb-4 italic">
-                    Press play — I picked this one because it always reminds me of you
+                  <p 
+                    className="text-lantern-mist/70 text-sm text-center mb-4 italic"
+                    style={{ fontFamily: "'Lora', serif" }}
+                  >
+                    Press play — semoga lagu ini bisa menemanimu
                   </p>
                   
                   {surpriseMusic ? (
