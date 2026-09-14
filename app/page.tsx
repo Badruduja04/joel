@@ -42,7 +42,7 @@ export default function Home() {
         volume={0.15}
         autoPlay={true}
         fadeInDuration={4}
-        showControls={true}
+        showControls={false}
       />
 
       {/* Dynamic background brightness overlay */}

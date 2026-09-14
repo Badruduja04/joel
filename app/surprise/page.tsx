@@ -480,8 +480,8 @@ export default function SurprisePage() {
   
   return (
     <main className="min-h-screen relative overflow-hidden flex items-center justify-center">
-      {/* Background gradient lantern theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-lantern-midnight via-indigo-900 to-lantern-midnight" />
+      {/* Background gradient - lighter for better text contrast */}
+      <div className="absolute inset-0 bg-gradient-to-br from-lantern-lilac/40 via-purple-200 to-lantern-lilac/40" />
       
       {/* Subtle animated orbs - lantern glow */}
       <motion.div
@@ -494,7 +494,7 @@ export default function SurprisePage() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-20 right-10 w-40 h-40 bg-lantern-lilac/20 rounded-full blur-3xl"
+        className="absolute top-20 right-10 w-40 h-40 bg-lantern-gold/30 rounded-full blur-3xl"
       />
       <motion.div
         animate={{
@@ -507,7 +507,7 @@ export default function SurprisePage() {
           ease: "easeInOut",
           delay: 1
         }}
-        className="absolute bottom-20 left-10 w-48 h-48 bg-lantern-gold/20 rounded-full blur-3xl"
+        className="absolute bottom-20 left-10 w-48 h-48 bg-lantern-lilac/30 rounded-full blur-3xl"
       />
       
       {/* Surprise Box & Flowers */}
@@ -1009,22 +1009,25 @@ export default function SurprisePage() {
                   className="text-center mb-8 space-y-4"
                 >
                   <p 
-                    className="text-white/95 text-base md:text-lg leading-relaxed"
+                    className="text-gray-900 text-base md:text-lg leading-relaxed font-medium"
                     style={{ fontFamily: "'Lora', serif" }}
                   >
                     Ga bisa dirangkaikan dengan kata-kata, tapi aku tahu kamu pasti bisa melewati semua ini dengan baik.
                     Setiap langkah yang kamu ambil, setiap usaha yang kamu lakukan, semuanya bermakna.
                   </p>
                   <p 
-                    className="text-white/95 text-base md:text-lg leading-relaxed"
+                    className="text-gray-900 text-base md:text-lg leading-relaxed font-medium"
                     style={{ fontFamily: "'Lora', serif" }}
                   >
                     Semoga lancar ya, Joel. Apapun yang sedang kamu hadapi, ingat bahwa kamu tidak sendirian.
                     Ada cahaya yang selalu menyinarimu, bahkan di malam paling gelap sekalipun.
                   </p>
                   <p 
-                    className="text-lantern-gold text-lg md:text-xl font-semibold italic"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
+                    className="text-lantern-gold text-lg md:text-xl font-bold italic"
+                    style={{ 
+                      fontFamily: "'Playfair Display', serif",
+                      textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                    }}
                   >
                     You shine brighter than a thousand lanterns. Keep going, you've got this! ✨
                   </p>
@@ -1060,7 +1063,7 @@ export default function SurprisePage() {
                     </motion.div>
                   </div>
                   <p 
-                    className="text-white/80 text-sm text-center mb-4 italic"
+                    className="text-gray-800 text-sm text-center mb-4 italic"
                     style={{ fontFamily: "'Lora', serif" }}
                   >
                     Press play — semoga lagu ini bisa menemanimu
