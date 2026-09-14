@@ -1009,21 +1009,21 @@ export default function SurprisePage() {
                   className="text-center mb-8 space-y-4"
                 >
                   <p 
-                    className="text-lantern-mist/90 text-base md:text-lg leading-relaxed"
+                    className="text-white/95 text-base md:text-lg leading-relaxed"
                     style={{ fontFamily: "'Lora', serif" }}
                   >
                     Ga bisa dirangkaikan dengan kata-kata, tapi aku tahu kamu pasti bisa melewati semua ini dengan baik.
                     Setiap langkah yang kamu ambil, setiap usaha yang kamu lakukan, semuanya bermakna.
                   </p>
                   <p 
-                    className="text-lantern-mist/90 text-base md:text-lg leading-relaxed"
+                    className="text-white/95 text-base md:text-lg leading-relaxed"
                     style={{ fontFamily: "'Lora', serif" }}
                   >
                     Semoga lancar ya, Joel. Apapun yang sedang kamu hadapi, ingat bahwa kamu tidak sendirian.
                     Ada cahaya yang selalu menyinarimu, bahkan di malam paling gelap sekalipun.
                   </p>
                   <p 
-                    className="text-lantern-lilac-light text-lg md:text-xl font-semibold italic"
+                    className="text-lantern-gold text-lg md:text-xl font-semibold italic"
                     style={{ fontFamily: "'Playfair Display', serif" }}
                   >
                     You shine brighter than a thousand lanterns. Keep going, you've got this! ✨
@@ -1060,7 +1060,7 @@ export default function SurprisePage() {
                     </motion.div>
                   </div>
                   <p 
-                    className="text-lantern-mist/70 text-sm text-center mb-4 italic"
+                    className="text-white/80 text-sm text-center mb-4 italic"
                     style={{ fontFamily: "'Lora', serif" }}
                   >
                     Press play — semoga lagu ini bisa menemanimu
